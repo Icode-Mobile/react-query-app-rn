@@ -19,6 +19,7 @@ import keys from '../../config/keys/index.json';
 
 export default function Home() {
   const [product, setProduct] = useState<string>('');
+  const [data, setData] = useState<Array<any>>([]);
   const query = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
@@ -45,22 +46,15 @@ export default function Home() {
           }),
         });
         if (!response.ok) {
-          Alert.alert(
-            'Servidor Desligado',
-            'Houve um erro ao enviar seu produto'
-          );
+          console.error('Erro ao enviar');
         } else {
-          setProduct('');
           Alert.alert(
             'Produto Enviado',
             'Seu produto foi enviado com sucesso!'
           );
         }
       } catch (e) {
-        Alert.alert(
-          'Servidor Desligado',
-          'Houve um erro ao enviar seu produto'
-        );
+        console.error('Erro ao enviar');
       }
     } else {
       Alert.alert(
@@ -99,6 +93,7 @@ export default function Home() {
       <ScrollView
         style={{
           flex: 1,
+          backgroundColor: '#111',
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -235,6 +230,17 @@ export default function Home() {
                 marginTop: 10,
                 paddingBottom: 20,
               }}
+              ListEmptyComponent={() => (
+                <View>
+                  <Text
+                    style={{
+                      color: '#cdcdcd',
+                    }}
+                  >
+                    Sem produtos cadastrados
+                  </Text>
+                </View>
+              )}
               scrollEnabled={false}
               keyExtractor={(item, index) => item.id}
             />

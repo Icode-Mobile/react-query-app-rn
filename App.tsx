@@ -27,13 +27,13 @@ export default function App() {
   }, [NetInfo, onlineManager]);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', onFocusState);
+    const subscriber = AppState.addEventListener('change', onFocusRefetch);
 
-    return () => subscription.remove();
+    return () => subscriber.remove();
   }, []);
 
-  const onFocusState = (status: AppStateStatus) => {
-    focusManager.setFocused(status === 'active');
+  const onFocusRefetch = (status: AppStateStatus) => {
+    focusManager.setFocused(status == 'active');
   };
 
   return (
